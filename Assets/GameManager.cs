@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -11,6 +12,10 @@ public class GameManager : MonoBehaviour
     private TMP_Text textLives;
 
     public static GameManager instance;
+
+    private AudioSource audioSource;
+
+    private GameObject spawnPlayer, player;
 
     private void Awake()
     {
@@ -29,6 +34,13 @@ public class GameManager : MonoBehaviour
     {
         lives = 3;
         textLives.text = "x " + lives;
+
+        audioSource = GetComponent<AudioSource>();
+        spawnPlayer = GameObject.FindGameObjectWithTag("SpawnPlayer");
+        player = GameObject.FindGameObjectWithTag("Player");
+
+        player.transform.position = spawnPlayer.transform.position;
+
     }
 
     // Update is called once per frame
@@ -41,6 +53,14 @@ public class GameManager : MonoBehaviour
     {
         lives++;
         textLives.text = "x " + lives;
+    }
+
+    public void PlaySound(AudioClip clip)
+    {
+        // Aquí puedes implementar la lógica para reproducir un sonido específico
+        // Por ejemplo, podrías usar AudioSource para reproducir un clip de audio
+        audioSource.clip = clip;
+        audioSource.Play();
     }
 
 
